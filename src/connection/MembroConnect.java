@@ -15,28 +15,43 @@ public class MembroConnect {
 	Statement statement;
 	ResultSet res;
 
-	public MembroConnect() {
-		this.createTable();
+	public MembroConnect()  {
+		try {
+			this.create();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	/*public void create () throws SQLException {
+
+	public void create () throws SQLException {
 		String sql = "CREATE TABLE membro ("
-			+ "cpf NUMBER,"
-			+ "nome VARCHAR2(10) NOT NULL,"
-			+ "sobrenome VARCHAR2(10),"
-			+ "sexo CHAR(1) NOT NULL,"
-			+ "id_endereco NUMBER NOT NULL,"
-			+ "estado_civil VARCHAR2(10) NOT NULL,"
-			+ "email VARCHAR2(40),"
-			+ "data_nascimento DATE NOT NULL,"
-			+ "CONSTRAINT membro_pkey PRIMARY KEY (cpf),"
-			+ "CONSTRAINT membro_fkey FOREIGN KEY (id_endereco) REFERENCES endereco(cep),"
-			+ "CONSTRAINT membro_check CHECK (sexo ='M' OR sexo ='F'))";
-		statement = connection.createStatement();
-		statement.executeUpdate(sql);
-		connection.commit();
-		connection.rollback();
-		connection.close();
-	}*/
+				+ "cpf NUMBER,"
+				+ "nome VARCHAR2(10) NOT NULL,"
+				+ "sobrenome VARCHAR2(10),"
+				+ "sexo CHAR(1) NOT NULL,"
+				+ "id_endereco NUMBER NOT NULL,"
+				+ "estado_civil VARCHAR2(10) NOT NULL,"
+				+ "email VARCHAR2(40),"
+				+ "data_nascimento DATE NOT NULL,"
+				+ "CONSTRAINT membro_pkey PRIMARY KEY (cpf),"
+				+ "CONSTRAINT membro_fkey FOREIGN KEY (id_endereco) REFERENCES endereco(cep),"
+				+ "CONSTRAINT membro_check CHECK (sexo ='M' OR sexo ='F'))";
+
+		try {
+			statement = connection.createStatement();
+
+			statement.executeUpdate(sql);
+		} catch (SQLException e) {
+			//connection.commit();
+			//connection.rollback();
+			e.printStackTrace();
+		} finally {
+			if(statement != null) {
+				connection.close();
+			}
+		}
+	}
 
 	public void select (Membro membro) throws SQLException {
 		String sql = "SELECT * FROM " + nomeTB;
@@ -92,16 +107,4 @@ public class MembroConnect {
 
 	}
 
-	public void createTable() {
-		String sql = "CREATE TABLE membro (cpf NUMBER, "
-				+ "nome VARCHAR2(10) NOT NULL,"
-				+ " sobrenome VARCHAR2(10), "
-				+ "sexo CHAR(1) NOT NULL,"
-				+ " id_endereco NUMBER NOT NULL,"
-				+ " estado_civil VARCHAR2(10) NOT NULL,"
-				+ " email VARCHAR2(40),"
-				+ " data_nascimento DATE NOT NULL,"
-				+ " CONSTRAINT membro_pkey PRIMARY KEY (cpf), CONSTRAINT membro_fkey FOREIGN KEY (id_endereco) REFERENCES endereco(cep),"
-				+ "CONSTRAINT membro_check CHECK (sexo ='M' OR sexo ='F'))";
-	}
 }
