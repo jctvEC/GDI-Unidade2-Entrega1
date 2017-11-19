@@ -14,6 +14,14 @@ public class EnderecoConnect {
   Statement statement;
   ResultSet res;
   
+  public EnderecoConnect() {
+	  try {
+		this.create();
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+  }
   public void create () throws SQLException {
     String sql = "CREATE TABLE endereco (" + 
         "  cep NUMBER," + 
