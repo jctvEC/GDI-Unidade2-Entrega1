@@ -22,6 +22,26 @@ public class MembroConnect {
 	Statement statement;
 	ResultSet res;
 	
+	public void create () {
+		String sql = "CREATE TABLE membro (
+			+ "cpf NUMBER,"
+			+ "nome VARCHAR2(10) NOT NULL,"
+			+ "sobrenome VARCHAR2(10),"
+			+ "sexo CHAR(1) NOT NULL,"
+			+ "id_endereco NUMBER NOT NULL,"
+			+ "estado_civil VARCHAR2(10) NOT NULL,"
+			+ "email VARCHAR2(40),"
+			+ "data_nascimento DATE NOT NULL,"
+			+ "CONSTRAINT membro_pkey PRIMARY KEY (cpf),"
+			+ "CONSTRAINT membro_fkey FOREIGN KEY (id_endereco) REFERENCES endereco(cep),"
+			+ "CONSTRAINT membro_check CHECK (sexo ='M' OR sexo ='F'))"
+		statement = connection.createStatement();
+		statement.executeUpdate(sql);
+		connection.commit();
+		connection.rollback();
+		connection.close();
+	}
+	
 	public void select (Membro membro) throws SQLException {
 		String sql1 = "SELECT * FROM " + nomeTB;
 		this.connection = Conexao.connectDriver();
