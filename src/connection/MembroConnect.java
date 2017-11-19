@@ -2,6 +2,7 @@ package connection;
 
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,18 +11,14 @@ import app.Membro;
 
 public class MembroConnect {
 
-	Connection connection;
+	public static Connection connection = null;
+	Conexao conn;
 	String nomeTB = "membro";
 	Statement statement;
 	ResultSet res;
 
-	public MembroConnect()  {
-		try {
-			this.create();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public MembroConnect() {
+		this.createTable();
 	}
 
 	public void create () throws SQLException {
@@ -39,18 +36,17 @@ public class MembroConnect {
 				+ "CONSTRAINT membro_check CHECK (sexo ='M' OR sexo ='F'))";
 
 		try {
+			PreparedStatement psmt = connection.prepareStatement(sql);
 			statement = connection.createStatement();
-
 			statement.executeUpdate(sql);
-		} catch (SQLException e) {
-			//connection.commit();
-			//connection.rollback();
+		}catch(Exception e){
 			e.printStackTrace();
-		} finally {
-			if(statement != null) {
-				connection.close();
-			}
+		}finally {
+			connection.close();
 		}
+		//connection.commit();
+		//connection.rollback();
+	
 	}
 
 	public void select (Membro membro) throws SQLException {
@@ -107,4 +103,16 @@ public class MembroConnect {
 
 	}
 
+	public void createTable() {
+		String sql = "CREATE TABLE membro (cpf NUMBER, "
+				+ "nome VARCHAR2(10) NOT NULL,"
+				+ " sobrenome VARCHAR2(10), "
+				+ "sexo CHAR(1) NOT NULL,"
+				+ " id_endereco NUMBER NOT NULL,"
+				+ " estado_civil VARCHAR2(10) NOT NULL,"
+				+ " email VARCHAR2(40),"
+				+ " data_nascimento DATE NOT NULL,"
+				+ " CONSTRAINT membro_pkey PRIMARY KEY (cpf), CONSTRAINT membro_fkey FOREIGN KEY (id_endereco) REFERENCES endereco(cep),"
+				+ "CONSTRAINT membro_check CHECK (sexo ='M' OR sexo ='F'))";
+	}
 }
