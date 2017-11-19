@@ -3,6 +3,7 @@ package connection;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.PreparedStatement;
 
 import app.Endereco;
@@ -30,14 +31,14 @@ public class EnderecoConnect {
         "  estado VARCHAR2(20) NOT NULL," + 
         "  CONSTRAINT endereco_pkey PRIMARY KEY (cep))");
 	  psmt.executeUpdate();
-	  connecion.close();
+	  connection.close();
   }
   
   public void select (Endereco endereco) throws SQLException {
 	  	this.connection = Conexao.connectDriver();
 		PreparedStatement psmt = connection.prepareStatement("SELECT * FROM endereco");
 		psmt.execute();
-		ResultSet res = spsmt.executeQuery();
+		ResultSet res = psmt.executeQuery();
 		while(res.next()) {
 			//coloca na tabela pra display
 		}
@@ -47,21 +48,21 @@ public class EnderecoConnect {
   public void insert (Endereco endereco) throws SQLException {
 	  	this.connection = Conexao.connectDriver();
 		PreparedStatement psmt = connection.prepareStatement("INSERT INTO endereco (cep, rua, complemento, bairro, cidade, estado) VALUES(?, ?, ?, ?, ?, ?)");
-		psmt.setInt(1, cep);
-		psmt.setString(2, rua);
-		psmt.setString(3, complemento);
-		psmt.setInt(4, bairro);
-		psmt.setString(5, cidade);
-		psmt.setString(6, estado);
+		psmt.setInt(1, endereco.getCep());
+		psmt.setString(2, endereco.getRua());
+		psmt.setString(3, endereco.getComplemento());
+		psmt.setString(4, endereco.getBairro());
+		psmt.setString(5, endereco.getBairro());
+		psmt.setString(6, endereco.getEstado());
 		psmt.executeUpdate();
 		
 		connection.close();
   }
   
   public void update (Endereco endereco) throws SQLException {
-    String sql3 = "UPDATE " + nomeTB + "SET " + "rua = " + endereco.getRua() + "complemento = " + endereco.getComplemento() + "bairro = " + endereco.getBairro() + "cidade = " + endereco.getCidade() + "estado = " + endereco.getEstado() + "WHERE cpf = " + endereco.getCep();
+    String sql3 = "UPDATE " + " endereco " + "SET " + "rua = " + endereco.getRua() + "complemento = " + endereco.getComplemento() + "bairro = " + endereco.getBairro() + "cidade = " + endereco.getCidade() + "estado = " + endereco.getEstado() + "WHERE cpf = " + endereco.getCep();
     this.connection = Conexao.connectDriver();
-    statement = connection.createStatement();
+    Statement statement = connection.createStatement();
     statement.executeUpdate(sql3);
     connection.commit();
     connection.rollback();
@@ -69,9 +70,9 @@ public class EnderecoConnect {
   }
   
   public void delete (Endereco endereco) throws SQLException {
-    String sql4 = "DELETE FROM " + nomeTB + "WHERE cpf = " + endereco.getCep();
+    String sql4 = "DELETE FROM " + " endereco " + "WHERE cpf = " + endereco.getCep();
     this.connection = Conexao.connectDriver();
-    statement = connection.createStatement();
+    Statement statement = connection.createStatement();
     statement.executeUpdate(sql4);
     connection.commit();
     connection.rollback();
