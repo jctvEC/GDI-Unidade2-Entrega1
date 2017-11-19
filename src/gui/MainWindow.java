@@ -31,6 +31,7 @@ public class MainWindow {
 	private MembroConnect membroConexao;
 	private Endereco endereco;
 	private Membro membro;
+	private EnderecoConnect enderecoConexao;
 
 	private JTextField cpfField;
 	private JTextField nameField;
@@ -41,6 +42,18 @@ public class MainWindow {
 	private JTextField emailField;
 	private JTextField nascimentoField;
 	private JTable sqlTable;
+	private JTextField cepField;
+	private JTextField ruaField;
+	private JTextField compField;
+	private JTextField bairroField;
+	private JTextField cidadeField;
+	private JTextField estadoField;
+	private JLabel cepLabel;
+	private JLabel ruaLabel;
+	private JLabel compLabel;
+	private JLabel estadoLabel;
+	private JLabel cidadeLabel;
+	private JLabel bairroLabel;
 
 	public MainWindow(){
 		prepareGUI();
@@ -53,10 +66,11 @@ public class MainWindow {
 		Date dat = new Date();
 		conexao = new Conexao();
 		membroConexao = new MembroConnect();
+		enderecoConexao = new EnderecoConnect();
 		endereco = new Endereco(0, "", "", "", "", "");
 		membro = new Membro(0, "", "", '0', 0, "", "", dat);
 
-		
+
 		//setando os frames
 		mainFrame = new JFrame("GDI");
 		mainFrame.setSize(600,600);
@@ -101,10 +115,18 @@ public class MainWindow {
 
 		buttonMembro.setActionCommand("membro");
 
+		//botao de adicionar endereco
+		JButton buttonAdicionarEndereco = new JButton("Adicionar Endereco");
+		buttonAdicionarEndereco.setBounds(20, 199, 150, 23);
+		mainFrame.getContentPane().add(buttonAdicionarEndereco);
+
+		buttonAdicionarEndereco.setActionCommand("endereco");
+
 		//setando listeners
 		buttonAbrir.addActionListener(new ButtonClickListener());
 		buttonAdicionar.addActionListener(new ButtonClickListener());
 		buttonMembro.addActionListener(new ButtonClickListener());
+		buttonAdicionarEndereco.addActionListener(new ButtonClickListener());
 
 		//setando campo onde vai ficar o path do arquivo
 		filePath = new JTextField();
@@ -158,10 +180,10 @@ public class MainWindow {
 		//
 		//labels
 		//
-		JLabel idEnderecoLabel = new JLabel("Endere\u00E7o");
+		JLabel idEnderecoLabel = new JLabel("Endere\u00E7oID");
 		idEnderecoLabel.setFont(new Font("Tahoma", Font.BOLD, 10));
 		idEnderecoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		idEnderecoLabel.setBounds(392, 13, 57, 14);
+		idEnderecoLabel.setBounds(372, 13, 77, 14);
 		mainFrame.getContentPane().add(idEnderecoLabel);
 
 		JLabel lblEstadoCivil = new JLabel("Estado civil");
@@ -205,38 +227,100 @@ public class MainWindow {
 		sexoLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		sexoLabel.setBounds(192, 92, 31, 14);
 		mainFrame.getContentPane().add(sexoLabel);
-		
+
 		sqlTable = new JTable();
 		sqlTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		sqlTable.setBounds(10, 295, 564, 231);
 		sqlTable.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"CPF", "Nome", "Sobrenome", "Sexo", "ID Endereço", "Estado civil", "Email", "Data de nascimento"},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"Sender", "Subject", "Body", "New column", "New column", "New column", "New column", "New column"
-			}
-		));
+				new Object[][] {
+					{"CPF", "Nome", "Sobrenome", "Sexo", "ID Endereço", "Estado civil", "Email", "Data de nascimento"},
+					{null, null, null, null, null, null, null, null},
+					{null, null, null, null, null, null, null, null},
+					{null, null, null, null, null, null, null, null},
+					{null, null, null, null, null, null, null, null},
+					{null, null, null, null, null, null, null, null},
+					{null, null, null, null, null, null, null, null},
+				},
+				new String[] {
+						"Sender", "Subject", "Body", "New column", "New column", "New column", "New column", "New column"
+				}
+				));
 		mainFrame.getContentPane().add(sqlTable);
+
+		cepField = new JTextField();
+		cepField.setBounds(247, 170, 86, 20);
+		mainFrame.getContentPane().add(cepField);
+		cepField.setColumns(10);
+
+		ruaField = new JTextField();
+		ruaField.setColumns(10);
+		ruaField.setBounds(222, 200, 148, 20);
+		mainFrame.getContentPane().add(ruaField);
+
+		compField = new JTextField();
+		compField.setColumns(10);
+		compField.setBounds(247, 231, 86, 20);
+		mainFrame.getContentPane().add(compField);
+
+		bairroField = new JTextField();
+		bairroField.setColumns(10);
+		bairroField.setBounds(436, 170, 86, 20);
+		mainFrame.getContentPane().add(bairroField);
+
+		cidadeField = new JTextField();
+		cidadeField.setColumns(10);
+		cidadeField.setBounds(436, 200, 86, 20);
+		mainFrame.getContentPane().add(cidadeField);
+
+		estadoField = new JTextField();
+		estadoField.setColumns(10);
+		estadoField.setBounds(436, 231, 86, 20);
+		mainFrame.getContentPane().add(estadoField);
+
+		cepLabel = new JLabel("CEP");
+		cepLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		cepLabel.setBounds(180, 173, 46, 14);
+		mainFrame.getContentPane().add(cepLabel);
+
+		ruaLabel = new JLabel("Rua");
+		ruaLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		ruaLabel.setBounds(180, 203, 46, 14);
+		mainFrame.getContentPane().add(ruaLabel);
+
+		compLabel = new JLabel("Complemento");
+		compLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		compLabel.setBounds(146, 234, 77, 14);
+		mainFrame.getContentPane().add(compLabel);
+
+		estadoLabel = new JLabel("Estado");
+		estadoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		estadoLabel.setBounds(380, 234, 46, 14);
+		mainFrame.getContentPane().add(estadoLabel);
+
+		cidadeLabel = new JLabel("Cidade");
+		cidadeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		cidadeLabel.setBounds(380, 203, 46, 14);
+		mainFrame.getContentPane().add(cidadeLabel);
+
+		bairroLabel = new JLabel("Bairro");
+		bairroLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		bairroLabel.setBounds(380, 173, 46, 14);
+		mainFrame.getContentPane().add(bairroLabel);
+
 
 
 		//setando listeners
 		buttonAbrir.addActionListener(new ButtonClickListener());
 		buttonAdicionar.addActionListener(new ButtonClickListener());
 		buttonMembro.addActionListener(new ButtonClickListener());
+		buttonAdicionarEndereco.addActionListener(new ButtonClickListener());
 		mainFrame.setVisible(true);  
 	}
 	private void showEventDemo(){
 		filePanel.setText("Escolha o arquivo"); 
 		mainFrame.setVisible(true);  
 	}
-	
+
 
 	//
 	// listener dos botoes, serve pra fazer eventos de acordo com o botao apertado
@@ -245,7 +329,7 @@ public class MainWindow {
 		public void actionPerformed(ActionEvent e) {
 			String command = e.getActionCommand();  
 
-	
+
 			// evento de abrir seletor de arquivos
 			if("abrir".equals(command)){
 				tableFrame.setText("abrir Button clicked.");
@@ -261,10 +345,10 @@ public class MainWindow {
 					path = selected.getAbsolutePath();
 					filePath.setText(path);
 				}
-			// evento de adicionar arquivo comum
+				// evento de adicionar arquivo comum
 			}else if("add".equals(command)) {
 				tableFrame.setText("ad Button clicked.");
-			// evento de adicionar membro
+				// evento de adicionar membro
 			}else if("membro".equals(command)) {
 				//cpf nome sobrenome sexo endereco estadocivil email nascimento
 				String data = nascimentoField.getText();
@@ -277,16 +361,33 @@ public class MainWindow {
 				}
 				tableFrame.setText("membro Button clicked.");
 				Membro memb = new Membro(Integer.parseInt(cpfField.getText()),
-										 nameField.getText(),
-										 sobrenomeField.getText(), 
-										 sexoField.getText().charAt(0), 
-										 Integer.parseInt(idEnderecoField.getText()),
-										 civilField.getText(), 
-										 emailField.getText(), dat
-				);
-				
+						nameField.getText(),
+						sobrenomeField.getText(), 
+						sexoField.getText().charAt(0), 
+						Integer.parseInt(idEnderecoField.getText()),
+						civilField.getText(), 
+						emailField.getText(), dat
+						);
+
 				try {
 					membroConexao.insert(memb);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}else if("endereco".equals(command)){
+				tableFrame.setText("endereco Button clicked.");
+				Endereco end = new Endereco(
+						Integer.parseInt(cepField.getText()),
+						ruaField.getText(),
+						compField.getText(),
+						bairroField.getText(),
+						cidadeField.getText(),
+						estadoField.getText()
+						);
+				
+				try {
+					enderecoConexao.insert(end);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
