@@ -24,9 +24,9 @@ public class Membro {
 	private int id_endereco;
 	private String estado_civil;
 	private String email;
-	private java.sql.Date data_nascimento;
+	private String data_nascimento;
 	
-	public Membro (int cpf, String nome, String sobrenome, char sexo, int id_endereco, String estado_civil, String email, java.sql.Date data_nascimento) {
+	public Membro (int cpf, String nome, String sobrenome, char sexo, int id_endereco, String estado_civil, String email, String data_nascimento) {
 		this.cpf = cpf;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
@@ -93,7 +93,7 @@ public class Membro {
 		this.email = email;
 	}
 
-	public java.sql.Date getData_nascimento() {
+	public String getData_nascimento() {
 		return data_nascimento;
 	}
 
