@@ -20,13 +20,13 @@ public class Membro {
 	private int cpf;
 	private String nome;
 	private String sobrenome;
-	private char sexo;
+	private String sexo;
 	private int id_endereco;
 	private String estado_civil;
 	private String email;
 	private String data_nascimento;
 	
-	public Membro (int cpf, String nome, String sobrenome, char sexo, int id_endereco, String estado_civil, String email, String data_nascimento) {
+	public Membro (int cpf, String nome, String sobrenome, String sexo, int id_endereco, String estado_civil, String email, String data_nascimento) {
 		this.cpf = cpf;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
@@ -35,6 +35,17 @@ public class Membro {
 		this.estado_civil = estado_civil;
 		this.email = email;
 		this.data_nascimento = data_nascimento;
+	}
+	
+	public Membro() {
+		this.cpf = 0;
+		this.nome = "";
+		this.sobrenome = "";
+		this.sexo = "0";
+		this.id_endereco = 0;
+		this.estado_civil = "";
+		this.email = "";
+		this.data_nascimento = "";
 	}
 
 	public int getCpf() {
@@ -61,11 +72,11 @@ public class Membro {
 		this.sobrenome = sobrenome;
 	}
 
-	public char getSexo() {
+	public String getSexo() {
 		return sexo;
 	}
 
-	public void setSexo(char sexo) {
+	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
 
@@ -97,7 +108,7 @@ public class Membro {
 		return data_nascimento;
 	}
 
-	public void setData_nascimento(java.sql.Date data_nascimento) {
+	public void setData_nascimento(String data_nascimento) {
 		this.data_nascimento = data_nascimento;
 	}
 	
