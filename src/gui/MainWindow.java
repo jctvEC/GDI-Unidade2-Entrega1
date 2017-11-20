@@ -24,6 +24,14 @@ public class MainWindow {
 	private JLabel filePanel;
 	private JLabel tableFrame;
 	private JTextField filePath;
+	private JLabel debug1;
+	private JLabel debug2;
+	private JLabel debug3;
+	private JLabel debug4;
+	private JLabel debug5;
+	private JLabel debug6;
+	private JLabel debug7;
+	private JLabel debug8;
 	private File selected;
 	private String path;
 
@@ -225,6 +233,38 @@ public class MainWindow {
 				}
 				));
 		mainFrame.getContentPane().add(sqlTable);
+		
+		JLabel debug1 = new JLabel("", SwingConstants.CENTER);
+		debug1.setBounds(45, 170, 153, 20);
+		mainFrame.getContentPane().add(debug1);
+		
+		JLabel debug2 = new JLabel("", SwingConstants.CENTER);
+		debug2.setBounds(45, 194, 153, 20);
+		mainFrame.getContentPane().add(debug2);
+		
+		JLabel debug3 = new JLabel("", SwingConstants.CENTER);
+		debug3.setBounds(45, 225, 153, 20);
+		mainFrame.getContentPane().add(debug3);
+		
+		JLabel debug4 = new JLabel("", SwingConstants.CENTER);
+		debug4.setBounds(45, 256, 153, 20);
+		mainFrame.getContentPane().add(debug4);
+		
+		JLabel debug8 = new JLabel("", SwingConstants.CENTER);
+		debug8.setBounds(320, 256, 153, 20);
+		mainFrame.getContentPane().add(debug8);
+		
+		JLabel debug7 = new JLabel("", SwingConstants.CENTER);
+		debug7.setBounds(320, 225, 153, 20);
+		mainFrame.getContentPane().add(debug7);
+		
+		JLabel debug6 = new JLabel("", SwingConstants.CENTER);
+		debug6.setBounds(308, 194, 153, 20);
+		mainFrame.getContentPane().add(debug6);
+		
+		JLabel debug5 = new JLabel("", SwingConstants.CENTER);
+		debug5.setBounds(320, 170, 153, 20);
+		mainFrame.getContentPane().add(debug5);
 
 
 
@@ -267,6 +307,8 @@ public class MainWindow {
 			}else if("add".equals(command)) {
 				tableFrame.setText("ad Button clicked.");
 				// evento de adicionar membro
+				
+				
 			}else if("membro".equals(command)) {
 				//cpf nome sobrenome sexo endereco estadocivil email nascimento
 				String data = nascimentoField.getText();
@@ -278,18 +320,27 @@ public class MainWindow {
 					e1.printStackTrace();
 				}
 				
-				
+				tableFrame.setText("aaa");
 				java.sql.Date dataSql = new java.sql.Date(dat.getTime());
 				tableFrame.setText("membro Button clicked.");
 				Membro memb = new Membro(Integer.parseInt(cpfField.getText()),
 						nameField.getText(),
 						sobrenomeField.getText(), 
-						sexoField.getText().charAt(0), 
+						sexoField.getText(), 
 						Integer.parseInt(idEnderecoField.getText()),
 						civilField.getText(), 
-						emailField.getText(), dataSql
+						emailField.getText(), nascimentoField.getText()
 						);
-
+				
+				debug1.setText(Integer.toString(membro.getCpf()));
+				debug2.setText(membro.getNome());
+				debug3.setText(membro.getSobrenome());
+				debug4.setText(membro.getSexo());
+				debug5.setText(Integer.toString(membro.getId_endereco()));
+				debug6.setText(membro.getEstado_civil());
+				debug6.setText(membro.getEmail());
+				debug8.setText(membro.getData_nascimento());
+				
 				try {
 					membroConexao.insert(memb);
 				} catch (SQLException e1) {
