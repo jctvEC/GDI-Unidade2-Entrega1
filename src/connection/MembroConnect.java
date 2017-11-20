@@ -17,13 +17,18 @@ public class MembroConnect {
 
 	
 	public MembroConnect() {
-		this.createTable();
+		try {
+			this.create();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void create () throws SQLException {
 		this.connection = Conexao.connectDriver();
-		PreparedStatement psmt = connection.prepareStatement("CREATE TABLE membro (cpf NUMBER, nome VARCHAR2(10) NOT NULL, sobrenome VARCHAR2(10), sexo CHAR(1) NOT NULL, id_endereco NUMBER NOT NULL, estado_civil VARCHAR2(10) NOT NULL, email VARCHAR2(40), data_nascimento DATE NOT NULL, CONSTRAINT membro_pkey PRIMARY KEY (cpf), CONSTRAINT membro_fkey FOREIGN KEY (id_endereco) REFERENCES endereco(cep), CONSTRAINT membro_check CHECK (sexo ='M' OR sexo ='F'))");
-		psmt.executeUpdate();
+		PreparedStatement psmt1 = connection.prepareStatement("CREATE TABLE membro (cpf NUMBER, nome VARCHAR2(10) NOT NULL, sobrenome VARCHAR2(10), sexo CHAR(1) NOT NULL, id_endereco NUMBER NOT NULL, estado_civil VARCHAR2(10) NOT NULL, email VARCHAR2(40), data_nascimento DATE NOT NULL, CONSTRAINT membro_pkey PRIMARY KEY (cpf), CONSTRAINT membro_fkey FOREIGN KEY (id_endereco) REFERENCES endereco(cep), CONSTRAINT membro_check CHECK (sexo ='M' OR sexo ='F'))");
+		psmt1.executeUpdate();
 		connection.close();
 	
 	}
@@ -49,7 +54,7 @@ public class MembroConnect {
 		psmt.setInt(5, membro.getId_endereco());
 		psmt.setString(6, membro.getEstado_civil());
 		psmt.setString(7, membro.getEmail());
-		psmt.setDate(8, (Date) membro.getData_nascimento());
+		psmt.setDate(8, membro.getData_nascimento());
 		psmt.executeUpdate();
 		
 		connection.close();
@@ -84,8 +89,6 @@ public class MembroConnect {
 				+ " id_endereco NUMBER NOT NULL,"
 				+ " estado_civil VARCHAR2(10) NOT NULL,"
 				+ " email VARCHAR2(40),"
-				+ " data_nascimento DATE NOT NULL,"
-				+ " CONSTRAINT membro_pkey PRIMARY KEY (cpf), CONSTRAINT membro_fkey FOREIGN KEY (id_endereco) REFERENCES endereco(cep),"
-				+ "CONSTRAINT membro_check CHECK (sexo ='M' OR sexo ='F'))";
+				+ " data_nascimento DATE NOT NULL				)";
 	}
 }
