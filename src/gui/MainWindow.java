@@ -37,6 +37,7 @@ public class MainWindow {
 
 	private Conexao conexao;
 	private MembroConnect membroConexao;
+	private ArquivoConnect arquivoConexao;
 	
 	private Membro membro;
 	
@@ -62,6 +63,7 @@ public class MainWindow {
 		Date dat = new Date();
 		conexao = new Conexao();
 		membroConexao = new MembroConnect();
+		arquivoConexao = new ArquivoConnect();
 		
 		//membro = new Membro(0, "", "", '0', 0, "", "", "");
 
@@ -307,7 +309,8 @@ public class MainWindow {
 			}else if("add".equals(command)) {
 				tableFrame.setText("ad Button clicked.");
 				// evento de adicionar membro
-				
+				arquivoConexao.create();
+				arquivoConexao.enviar(selected);
 				
 			}else if("membro".equals(command)) {
 				//cpf nome sobrenome sexo endereco estadocivil email nascimento
